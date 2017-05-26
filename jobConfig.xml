@@ -1,0 +1,12 @@
+<jobs appName="JDBC2Hive" maxNumberOfThreads="10">
+<jdbc2hive id="all_tables">
+    <jdbc propsFile="/user/k-ayada/prod.properties" fetchSize="100000" isolationLevel="READ_COMMIT">
+        <sql><![CDATA[select * from PROD.all_tables ]]> </sql>
+    </jdbc>
+    <hive loadType="append" schema="kayada" table="all_tables" partitionKey="SK_EFFDATE" noOfPartitions="7" lowerBound="" upperBound="" />
+</jdbc2hive>
+<jdbc2hive id="ALL_OBJECTS">
+    <jdbc propsFile="/user/k-ayada/prod.properties" schema="PROD" table="ALL_OBJECTS"  fetchSize="100000" isolationLevel="READ_COMMIT"/>
+    <hive loadType="overwrite" schema="kayada" table="ALL_OBJECTS" partitionKey="" noOfPartitions="7" lowerBound="" upperBound="" />
+</jdbc2hive>
+<jobs>
