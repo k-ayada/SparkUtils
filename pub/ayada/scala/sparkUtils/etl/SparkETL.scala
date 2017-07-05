@@ -80,9 +80,9 @@ class SparkETL(args: Array[String]) {
                         val p = pub.ayada.scala.sparkUtils.etl.Csv2DF.getCsv2DFProps(job)
                         val t = getTransformers((job \ "transformers"))
                         jobProps = jobProps :+ pub.ayada.scala.sparkUtils.etl.CsvJobProps(id = jobId, readProps = p, dF2HiveProps = h, transformProps = t)
-                        sb.append("\n").append(pub.ayada.scala.utils.DateTimeUtils.getFmtDtm("Driver-Main") + "CSV Properties for job: " + jobId + "\n" + pub.ayada.scala.utils.ObjectUtils.prettyPrint(p))
-                        sb.append("\n").append(pub.ayada.scala.utils.DateTimeUtils.getFmtDtm("Driver-Main") + "Transformation Properties for job: " + jobId + "\n" + pub.ayada.scala.utils.ObjectUtils.prettyPrint(t))
-                        sb.append("\n").append(pub.ayada.scala.utils.DateTimeUtils.getFmtDtm("Driver-Main") + "Hive Properties for job: " + jobId + "\n" + pub.ayada.scala.utils.ObjectUtils.prettyPrint(h))
+                        sb.append("\n").append(pub.ayada.scala.utils.DateTimeUtils.getFmtDtm("Driver-Main") + "CSV Properties for job: " + jobId + ": " + pub.ayada.scala.utils.ObjectUtils.prettyPrint(p))
+                        sb.append("\n").append(pub.ayada.scala.utils.DateTimeUtils.getFmtDtm("Driver-Main") + "Transformation Properties for job: " + jobId + ": " + pub.ayada.scala.utils.ObjectUtils.prettyPrint(t))
+                        sb.append("\n").append(pub.ayada.scala.utils.DateTimeUtils.getFmtDtm("Driver-Main") + "Hive Properties for job: " + jobId + ": " + pub.ayada.scala.utils.ObjectUtils.prettyPrint(h))
                     }
                 }
                 case _ => {
@@ -135,14 +135,6 @@ object SparkETL {
     def main(args: Array[String]): Unit = {
         val run = args(0)
         var rc = 0
-        println("Load Type: " + run)
-        run match {
-            case "jdbc2Hive"     => {}
-            case "csv2Hive"      => {}
-            case "multiSrc2Hive" => {}
-            case _               => throw new Exception("Please pass valid value for arument 1. Options: jdbc2Hive | csv2Hive | multirc2Hive")
-        }
-
         val sparkETL: SparkETL = new SparkETL(args)
         rc = sparkETL.kickoffLoad
 
